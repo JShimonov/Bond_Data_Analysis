@@ -12,17 +12,34 @@ lapply(
 setwd("~/Desktop/ECON392W")
 
 # import datasets
-yield_data <- read_excel("Bond Data/BondYields.xlsx")
-fed_data <- read_excel("Bond Data/FedData.xlsx")
+returns_data <- read_excel("Bond Data/bloomberg_bond_data.xlsx")
 
 # convert datasets to dataframes
-yield_data <- as.data.frame(yield_data)
-fed_data <- as.data.frame(fed_data)
-
-# clean up the fed_data  and yield_data a little
+returns_data <- as.data.frame(returns_data)
 
 # remove rows from yield_data where the row values are empty
-yield_data <- yield_data[!(is.na(yield_data$`10yr Treasury Yield`) | is.na(yield_data$`Barclays Agg HY Spread`) | is.na(yield_data$`Barclays Agg Investment Grade Corporate Spread`)), ]
+returns_data <- returns_data[!(is.na(returns_data$`Bloomberg Barclays US Treasury Index Returns`) | is.na(returns_data$`Bloomberg Barclays US Corporate High Yield Bond Index Returns`) | is.na(returns_data$`Bloomberg Barclays US Corporate Bond Index Returns`)), ]
+returns_data <- cbind(returns_data[0], returns_data$`Date`, returns_data$`Bloomberg Barclays US Treasury Index Returns`, returns_data$`Bloomberg Barclays US Corporate High Yield Bond Index Returns`, returns_data$`Bloomberg Barclays US Corporate Bond Index Returns`)
+colnames(returns_data) <- c("Date", 
+                            "Bloomberg Barclays US Treasury Index Returns",
+                            "Bloomberg Barclays US Corporate High Yield Bond Index Returns",
+                            "Bloomberg Barclays US Corporate Bond Index Returns")
 
-summary(yield_data)
-summary(fed_data)
+# get summary information of the datasets
+summary(returns_data)
+
+# find basic data on the datasets 
+# stargazer(as.data.frame(yield_data), type="text")
+# 
+# plot(log(yield_data$`10yr Treasury Yield`) ~ log(yield_data$`Barclays Agg HY Spread`), data = yield_data)
+# results <- lm(log(yield_data$`10yr Treasury Yield`) ~ log(yield_data$`Barclays Agg HY Spread`), data = yield_data)
+# abline(results)
+# 
+# plot(log(yield_data$`Barclays Agg HY Spread`) ~ log(yield_data$`Barclays Agg Investment Grade Corporate Spread`), data = yield_data)
+# HY_and_IG_results <-lm(log(yield_data$`Barclays Agg HY Spread`) ~ log(yield_data$`Barclays Agg Investment Grade Corporate Spread`), data = yield_data)
+# abline(HY_and_IG_results)
+
+
+
+
+

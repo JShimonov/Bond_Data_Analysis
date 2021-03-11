@@ -4,7 +4,7 @@ cat(rep("\n", 25))
 
 # import libraries 
 lapply(
-  c("readr", "readxl", "dplyr", "stringr", "stargazer", "plm", "AER"),
+  c("readr", "readxl", "dplyr", "stringr", "stargazer", "plm", "AER", "xts", "rugarch","rmgarch", "quantmod"),
   require,
   character.only = TRUE)
 
@@ -28,18 +28,20 @@ colnames(returns_data) <- c("Date",
 # get summary information of the datasets
 summary(returns_data)
 
-# find basic data on the datasets 
-# stargazer(as.data.frame(yield_data), type="text")
-# 
-# plot(log(yield_data$`10yr Treasury Yield`) ~ log(yield_data$`Barclays Agg HY Spread`), data = yield_data)
-# results <- lm(log(yield_data$`10yr Treasury Yield`) ~ log(yield_data$`Barclays Agg HY Spread`), data = yield_data)
-# abline(results)
-# 
-# plot(log(yield_data$`Barclays Agg HY Spread`) ~ log(yield_data$`Barclays Agg Investment Grade Corporate Spread`), data = yield_data)
-# HY_and_IG_results <-lm(log(yield_data$`Barclays Agg HY Spread`) ~ log(yield_data$`Barclays Agg Investment Grade Corporate Spread`), data = yield_data)
-# abline(HY_and_IG_results)
+# -----------------------------------------------------------------------
 
+d_mat = as.Date(returns_data$Date, format = "%y/%m/%d")
+r_mat = c(returns_data$`Bloomberg Barclays US Treasury Index Returns`, 
+          returns_data$`Bloomberg Barclays US Corporate High Yield Bond Index Returns`,
+          returns_data$`Bloomberg Barclays US Corporate Bond Index Returns`)
 
+r_xts <- xts(r_mat, order.by=d_mat)
 
+ga_spe <- ugarchspec(mean.model = list(armaOrder = c(1,1)), variance.model = list(garchOrder = c(1,1), model = "sGARCH"), distribution.model = "norm")
+ga_fit <- ugarchfit(ga_spe, data = r_xts, log = TRUE)
+ga_fit
+
+dcc_spe <- dccspec(uspec = multispec( replicate(ncol(r_xts), ga_spe) ), dccOrder = c(1,1), distribution = "mvnorm") 
+dcc_fit <- dccfit(dcc_spe, data = r_xts)
 
 

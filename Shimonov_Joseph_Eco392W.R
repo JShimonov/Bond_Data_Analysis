@@ -25,9 +25,6 @@ colnames(returns_data) <- c("Date",
                             "Bloomberg Barclays US Corporate High Yield Bond Index Returns",
                             "Bloomberg Barclays US Corporate Bond Index Returns")
 
-# get summary information of the datasets
-summary(returns_data)
-
 # -----------------------------------------------------------------------
 
 d_mat = as.Date(returns_data$Date, format = "%y/%m/%d")
@@ -51,3 +48,5 @@ dcc_spe <- dccspec(uspec = multispec(replicate(ncol(r_xts), ga_spe)),
 
 dcc_fit <- dccfit(dcc_spe, data = r_xts)
 dcc_fit
+
+summary(returns_data)

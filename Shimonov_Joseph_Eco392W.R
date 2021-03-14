@@ -34,6 +34,7 @@ r_mat = cbind(returns_data$`Bloomberg Barclays US Treasury Index Returns`,
           returns_data$`Bloomberg Barclays US Corporate Bond Index Returns`)
 
 r_xts <- xts(r_mat, order.by = d_mat)
+plot(r_xts)
 
 ga_spe <- ugarchspec(mean.model = list(armaOrder = c(1,1)), 
                      variance.model = list(garchOrder = c(1,1), model = "sGARCH"), 
@@ -48,5 +49,6 @@ dcc_spe <- dccspec(uspec = multispec(replicate(ncol(r_xts), ga_spe)),
 
 dcc_fit <- dccfit(dcc_spe, data = r_xts)
 dcc_fit
+plot(dcc_fit, which = 4)
 
 summary(returns_data)

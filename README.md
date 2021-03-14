@@ -13,7 +13,15 @@ The time series for these data points spans from October 1999 to March 2021
 Although there are no regressions made in this study, the models that we rely on include ARMA-GARCH-DCC. The first function defiens the ARMA+GARCH part of each return, the second function defines the joint DCC model, and the third function estimates the joint model.
 
 ## Interesting Analyses
-Beecause the data that was collected spans more that 20 years, there are unique insights when looking at the evolution of the bond market. All it takes is one graph function to see such spikes in bond returns during the financial crisis of 2008, as well as the recession that the economy underwent recently.
+Beecause the data that was collected spans more that 20 years, there are unique insights when looking at the evolution of the bond market. All it takes is one graph function to see such spikes in bond returns during the financial crisis of 2008, as well as the recession that the economy underwent recently. Images of these plots are found below
+
+## Images
+
+### Correlation between HY Corporate Bond Returns and Treasury Returns
+<img src="https://github.com/JShimonov/Bond_Data_Analysis/blob/main/Images/HighYield_TreasuryReturns_Corr.png" width=500><br>
+
+### r_xts
+<img src="https://github.com/JShimonov/Bond_Data_Analysis/blob/main/Images/r_xts.png" width=500><br>
 
 ## Next Goals
 Analyze the data returned from the models: find events and patterns from the time-series of means, volatilites, and correlations.

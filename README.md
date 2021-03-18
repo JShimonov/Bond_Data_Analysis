@@ -23,6 +23,15 @@ Beecause the data that was collected spans more that 20 years, there are unique 
 ### r_xts
 <img src="https://github.com/JShimonov/Bond_Data_Analysis/blob/main/Images/r_xts.png" width=500><br>
 
+#### r_xts_Bloomberg Barclays US Treasury Index Returns
+<img src="https://github.com/JShimonov/Bond_Data_Analysis/blob/main/Images/r_xts_Bloomberg_Barclays_US_Treasury_Index_Returns.png" width=500><br>
+
+#### r_xts_Bloomberg Barclays US Corporate High Yield Bond Index Returns
+<img src="https://github.com/JShimonov/Bond_Data_Analysis/blob/main/Images/r_xts_Bloomberg_Barclays_US_Corporate_High_Yield_Bond_Index_Returns.png" width=500><br>
+
+#### r_xts_Bloomberg Barclays US Corporate Bond Index Returns
+<img src="https://github.com/JShimonov/Bond_Data_Analysis/blob/main/Images/r_xts_Bloomberg_Barclays_US_Corporate_Bond_Index_Returns.png" width=500><br>
+
 ## Next Goals
 Analyze the data returned from the models: find events and patterns from the time-series of means, volatilites, and correlations.
 

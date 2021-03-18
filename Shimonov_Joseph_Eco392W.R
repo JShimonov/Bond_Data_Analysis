@@ -30,9 +30,9 @@ colnames(returns_data) <- c("Date",
 d_mat = as.Date(returns_data$Date, format = "%y/%m/%d")
 
 # Multi returns
-r_mat = cbind(returns_data$`Bloomberg Barclays US Treasury Index Returns`, 
-          returns_data$`Bloomberg Barclays US Corporate High Yield Bond Index Returns`,
-          returns_data$`Bloomberg Barclays US Corporate Bond Index Returns`)
+r_mat = cbind(returns_data$`Bloomberg Barclays US Corporate High Yield Bond Index Returns`,
+              returns_data$`Bloomberg Barclays US Corporate Bond Index Returns`,
+              returns_data$`Bloomberg Barclays US Treasury Index Returns`)
 
 r_xts <- xts(r_mat, order.by = d_mat)
 
@@ -57,12 +57,28 @@ ga_spe <- ugarchspec(mean.model = list(armaOrder = c(1,1)),
 ga_fit <- ugarchfit(ga_spe, data = r_xts, log = TRUE)
 ga_fit
 
+# plot the volatility using ga_fit 
+plot(ga_fit, which = 3)
+
+# dynamic conditional correlation (DCC)
 dcc_spe <- dccspec(uspec = multispec(replicate(ncol(r_xts), ga_spe)), 
                    dccOrder = c(1,1), 
                    distribution = "mvnorm") 
 
 dcc_fit <- dccfit(dcc_spe, data = r_xts)
 dcc_fit
+# plotting mean
+#pdf(paste0("./fit.pdf"))
+
+plot(dcc_fit, which=1, series=(1:3))
+
+#dev.off()
+plot(dcc_fit, which = 2, series=(1:3))
+
+# plotting volatility
+plot(dcc_fit, which = 4, series=(1:3))
+
+# plot correlation
 plot(dcc_fit, which = 4)
 
 summary(returns_data)

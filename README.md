@@ -23,8 +23,8 @@ Beecause the data that was collected spans more that 20 years, there are unique 
 ### DCC Mean
 <img src="https://github.com/JShimonov/Bond_Data_Analysis/blob/main/Images/DCC%20Mean.png" width=500><br>
 
-#### DCC Volatility
+### DCC Volatility
 <img src="https://github.com/JShimonov/Bond_Data_Analysis/blob/main/Images/DCC%20Volatility.png" width=500><br>
 
-#### Overall Volatility
+### Overall Volatility
 <img src="https://github.com/JShimonov/Bond_Data_Analysis/blob/main/Images/Overall%20Volatility.png" width=500><br>

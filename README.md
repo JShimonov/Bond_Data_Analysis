@@ -15,6 +15,9 @@ Although there are no regressions made in this study, the models that we rely on
 ## Interesting Analyses
 Beecause the data that was collected spans more that 20 years, there are unique insights when looking at the evolution of the bond market. All it takes is one graph function to see such spikes in bond returns during the financial crisis of 2008, as well as the recession that the economy underwent recently. Images of these plots are found below
 
+## Brief Summary of Data
+<img src="https://github.com/JShimonov/Bond_Data_Analysis/blob/main/Images/Summary.png" width=500><br>
+
 ## ARMA-GARCH-DCC Data
 
 ### HY Data

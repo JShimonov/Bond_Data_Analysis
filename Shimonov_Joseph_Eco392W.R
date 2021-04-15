@@ -43,7 +43,7 @@ r_mat = cbind(returns_data$`HY Returns`,
               returns_data$`IG Returns`,
               returns_data$`Treasury Returns`)
 
-
+# change the column names in the xts to show the bond types
 r_xts <- xts(r_mat, order.by = d_mat)
 r_xts_df <- as.data.frame(r_xts)
 colnames(r_xts_df) <- c("HY", "IG", "Treasury")
@@ -58,10 +58,6 @@ r_xts <- as.xts(r_xts_df)
 #r_xts_HY <- xts(r_mat_HY, order.by = d_mat)
 #r_xts_IG <- xts(r_mat_IG, order.by = d_mat)
 
-# plot
-#plot(r_xts_treasury)
-#plot(r_xts_HY)
-#plot(r_xts_IG)
 
 ga_spe <- ugarchspec(mean.model = list(armaOrder = c(1,1)), 
                      variance.model = list(garchOrder = c(1,1), model = "sGARCH"), 
@@ -80,9 +76,8 @@ dcc_spe <- dccspec(uspec = multispec(replicate(ncol(r_xts), ga_spe)),
 
 dcc_fit <- dccfit(dcc_spe, data = r_xts)
 dcc_fit
-# plotting mean
-#pdf(paste0("./fit.pdf"))
 
+# ploting
 plot(dcc_fit, which=1, series=(1:3))
 
 #dev.off()
@@ -94,4 +89,35 @@ plot(dcc_fit, which = 4, series=(1:3))
 # plot correlation
 plot(dcc_fit, which = 4)
 
-summary(returns_data)
+# find the correlation among all the return columns
+cor(returns_data[,2:ncol(returns_data)], use="all.obs", method = "pearson")
+
+fit_r <- as.data.frame(fitted(dcc_fit))
+vol_r <- as.data.frame(sigma(dcc_fit))
+cor_r <- as.data.frame(rcor(dcc_fit))
+
+# print stargazer outputs for fit_r, vol_r, and cor_r
+stargazer(fit_r, type = "text", flip = F, median = T)
+stargazer(vol_r, type = "text", flip = F, median = T)
+
+# does not work
+#stargazer(cor_r, type = "text", flip = F, median = T)
+
+stargazer(returns_data[,2:ncol(returns_data)], type = "text", flip = T)
+
+
+stargazer::stargazer(returns_data,
+                     type = "html",
+                     out = "~/Desktop/ECON392W/descriptives.doc")
+
+
+
+
+
+
+
+
+
+
+
+

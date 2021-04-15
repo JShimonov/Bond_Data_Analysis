@@ -89,26 +89,43 @@ plot(dcc_fit, which = 4, series=(1:3))
 # plot correlation
 plot(dcc_fit, which = 4)
 
+# show descriptive stats
+stargazer(returns_data[,2:ncol(returns_data)], type = "text", flip = T)
+
 # find the correlation among all the return columns
 cor(returns_data[,2:ncol(returns_data)], use="all.obs", method = "pearson")
 
 fit_r <- as.data.frame(fitted(dcc_fit))
 vol_r <- as.data.frame(sigma(dcc_fit))
-cor_r <- as.data.frame(rcor(dcc_fit))
+cor_r <- as.data.frame(rcor(dcc_fit, type = "R"))
+
+# prepare the cor_all for the stargazer
+# cor HY-IG
+cor_HYIG <- cor_r[1,2,]
+# cor HY-Treasury
+cor_HYTreasury <- cor_r[1,3,]
+# cor IG-Treasury
+cor_IGTreasury <- cor_r[2,3,]
+
+# convert the cors calculated into a df
+cor_HYIG <- as.data.frame(cor_HYIG)
+cor_HYTreasury <- as.data.frame(cor_HYTreasury)
+cor_IGTreasury <- as.data.frame(cor_IGTreasury)
+
+# bind the cors together to form cor_all
+cor_all <- cbind(cor_HYIG, cor_HYTreasury, cor_IGTreasury)
 
 # print stargazer outputs for fit_r, vol_r, and cor_r
-stargazer(fit_r, type = "text", flip = F, median = T)
-stargazer(vol_r, type = "text", flip = F, median = T)
+stargazer(fit_r, type = "text", flip = F)
+stargazer(vol_r, type = "text", flip = F)
+stargazer(cor_all, type = "text", flip = F)
 
 # does not work
 #stargazer(cor_r, type = "text", flip = F, median = T)
 
-stargazer(returns_data[,2:ncol(returns_data)], type = "text", flip = T)
-
-
-stargazer::stargazer(returns_data,
-                     type = "html",
-                     out = "~/Desktop/ECON392W/descriptives.doc")
+#stargazer::stargazer(returns_data,
+#                     type = "html",
+#                     out = "~/Desktop/ECON392W/descriptives.doc")
 
 
 
